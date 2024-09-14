@@ -14,19 +14,28 @@ money into a stash is a responsibility of the user.
 def command_list():
     print("""
     COMMAND LIST
-    add - add a money deposit to the tracker.
-    remove - remove an amount from the total. 
+    record - record a transaction to the tracker.
+    transactions - view all transactions.      
     total - view the total amount.
-    transactions - view all transactions.
+    help - view the command list.
+    quit - quits the program.
     """)
 
 def total_amount(transactions: list) -> float:
-    return round(sum(transaction for transaction in transactions))
-    
+    """
+    Calculates the total balance of user's transactions.
 
-    
+    Args:
+    transactions(list of float values): A list of the user's transaction amounts. Positive values indicate deposits, while negative values represent withdrawals.
+
+    Return:
+    float: total balance after summing up all transactions. 
+    """
+
+    return round(sum(transaction for transaction in transactions), 2)
+     
 def main():
-    #welcome message
+    #welcome message with initial view of the commands
     welcome_message()
     command_list()
     
@@ -38,28 +47,61 @@ def main():
         total = total_amount(transactions)
 
         command = input("Enter the command you would like to do: ").lower()
+        print()
 
-        #adds money
-        if command == 'add':    
-            amount = float(input('Enter the amount you stashed away: '))
-            transactions.append(amount)
-        #removes money
-        elif command == 'remove':
-            amount = float(input('Enter the amount you removed from the stash: '))
-            transactions.append(-amount)
+        #records a transaction
+        if command == 'record':  
+            print('You have chosend to record a transaction.')
 
-            print(f'You removed ${amount} from {total}. You are left with ${round(total-amount)}')
-        #shows total money
+            while True:
+                #gets user input on what kind of transaction it is 
+                print('Is the transaction a deposit or withdrawal?')
+                type_of_transaction = input('+ for deposit, - for withdrawal. Enter here: ')
+
+                #records a transaction into the list
+                if type_of_transaction == '+':
+                    amount = float(input('Enter the amount: '))
+                    print(f'You have recorded a transaction of ${amount}.\n')
+                    transactions.append(amount)#records positive amount if addition of money
+
+                elif type_of_transaction == '-':
+                    amount = float(input('Enter the amount: '))
+                    print(f'You have recorded a transaction of -${amount}.\n')
+                    transactions.append(-amount)#records negative amount if removal of money
+
+                #add code if user enters something else besides + or -
+
+                print('Would you like to record another transaction?')
+                another_transaction = input('Enter here(yes/no): ').lower()
+
+                if another_transaction == 'yes':
+                    pass
+                elif another_transaction == 'no':
+                    break
+                #add code if user enter someting else besides yes or no
+                print()
+
+        #shows total amount stored
         elif command == 'total':
-            print(f'Your total is ${total}')
+            print(f'Your total is ${total}\n')
+
+        #shows all the recorded transactions
         elif command == 'transactions':
-            #add code for this
+            print('\n'.join(str(transaction) + '$' for transaction in transactions))
+
+        elif command == 'quit':
+            break   
+
+        elif command == 'help':
+            command_list()
+
         else:
-            print('You have entered an invalid command. Please try again.')
+            print('You have entered an invalid command. Please try again.\n')
         
-        
 
-
-
+        #FOR FUTURE
+        #1. Modularize code.
+        #2. Add a feature that will automatically record when a transaction was made.
+        #3. Adds features to show transactions in orderL ascedning amount, descending amount, by date. 
 if __name__ == "__main__":
     main()
