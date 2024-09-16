@@ -1,3 +1,5 @@
+import records_module as rm
+
 def welcome_message():
     print("""
     Welcome to Raindy Day Cash App!
@@ -12,14 +14,13 @@ money into a stash is a responsibility of the user.
 """)
 
 def command_list():
-    print("""
-    COMMAND LIST
-    record - record a transaction to the tracker.
-    transactions - view all transactions.      
-    total - view the total amount.
-    help - view the command list.
-    quit - quits the program.
-    """)
+    print("""COMMAND LIST
+record - record a transaction to the tracker.
+transactions - view all transactions.      
+total - view the total amount.
+help - view the command list.
+quit - quits the program.
+""")
 
 def total_amount(transactions: list) -> float:
     """
@@ -51,35 +52,47 @@ def main():
 
         #records a transaction
         if command == 'record':  
-            print('You have chosend to record a transaction.')
-
+            print('You have chosen to record a transaction.')
+            #boolean used to check the status of the transaction. Used later to check if user wants to record another transaction. 
+            transaction_status = True
             while True:
-                #gets user input on what kind of transaction it is 
-                print('Is the transaction a deposit or withdrawal?')
-                type_of_transaction = input('+ for deposit, - for withdrawal. Enter here: ')
+                while transaction_status: #loop to get the user to enter a transaction
+                    #gets user input on what kind of transaction it is 
+                    print('Is the transaction a deposit or withdrawal?')
+                    type_of_transaction = input('+ for deposit, - for withdrawal. Enter here: ')
 
-                #records a transaction into the list
-                if type_of_transaction == '+':
-                    amount = float(input('Enter the amount: '))
-                    print(f'You have recorded a transaction of ${amount}.\n')
-                    transactions.append(amount)#records positive amount if addition of money
+                    #if depoist
+                    if type_of_transaction == '+':
+                        rm.type_of_transaction(type_of_transaction, transactions)
+                        transaction_status = False#sets to false so the loop doesn't activate again unless the user wants to do another transaction
+                        break
 
-                elif type_of_transaction == '-':
-                    amount = float(input('Enter the amount: '))
-                    print(f'You have recorded a transaction of -${amount}.\n')
-                    transactions.append(-amount)#records negative amount if removal of money
+                    #if withdrawal
+                    elif type_of_transaction == '-':
+                        rm.type_of_transaction(type_of_transaction, transactions)
+                        transaction_status = False#sets to false so the loop doesn't activate again unless the user wants to do another transaction
+                        break
 
-                #add code if user enters something else besides + or -
-
+                    #if invalid input
+                    else:
+                        print('You have entered an invalid command. Please try again.\n')
+                        continue
+                
+                #checks if user wants to add another transaction 
                 print('Would you like to record another transaction?')
-                another_transaction = input('Enter here(yes/no): ').lower()
+                another_transaction = input('Enter here(yes/no): ').lower()  
 
                 if another_transaction == 'yes':
-                    pass
+                    transaction_status = True
+
                 elif another_transaction == 'no':
+                    print()
                     break
-                #add code if user enter someting else besides yes or no
-                print()
+
+                else: 
+                    print('You have entered an invalid command. Please try again.\n')
+                    continue
+                
 
         #shows total amount stored
         elif command == 'total':
@@ -101,6 +114,7 @@ def main():
 
         #FOR FUTURE
         #1. Modularize code.
+        #1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type
         #2. Add a feature that will automatically record when a transaction was made.
         #3. Adds features to show transactions in orderL ascedning amount, descending amount, by date. 
 if __name__ == "__main__":
