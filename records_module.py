@@ -1,19 +1,44 @@
 """Module with functions created to record user's transactions"""
 
-def type_of_transaction(transaction_type: str) -> int:
-    sing = 0
+def another_transaction() -> bool:
+    """
+    Ask user if they want to record another transaction.
+    Return:
+        (bool): True or False for 'yes' and 'no' accordingly.
+    """
+    print('Would you like to record another transaction?')
+    while True:
+        another_transaction_input = input('Enter here(yes/no): ').lower()  
+
+        if another_transaction_input == 'yes':
+            return True
+        elif another_transaction_input == 'no':
+            return False
+        else: 
+            print('You have entered an invalid command. Please try again.')
+            continue
+                
+
+def type_of_transaction() -> int:
+    """
+    Gets user input on what kind of transaction they want and returns a positive or negative number.
+    Return:
+        value (int): -1 for withdrawl, 1 for deposit.
+    """
+
+    print('Is the transaction a deposit or withdrawal?')
+    transaction_type = input('+ for deposit, - for withdrawal. Enter here: ')
+
     while True:      
             if transaction_type == '+':
-                sign = 1  # Deposit, so no negative sign
-                break
+                return 1  # Deposit, so no negative sign    
             elif transaction_type == '-':
-                sign = -1
-                break
+                return -1   
             else:
                 print('You have entered an invalid type. Please try again.')
                 transaction_type = input('+ for deposit, - for withdrawal. Enter here: ')
                 continue
-    return sign 
+    
         
 def recording_transaction(transaction_type: int, transactions_list: list):
     """
@@ -26,7 +51,6 @@ def recording_transaction(transaction_type: int, transactions_list: list):
         transaction_type (int): -1 for withdrawl, 1 for deposit.
         transactions_list (list): A list which stores transactions.
     """
-
     while True:
         try:# Keep prompting the user until a valid number is entered
             amount = float(input('Enter the amount: '))
@@ -37,3 +61,4 @@ def recording_transaction(transaction_type: int, transactions_list: list):
             # If the user enters something that's not a number, this message will show
             print('Invalid input. Please enter a valid number.')
     
+
