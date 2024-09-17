@@ -53,33 +53,8 @@ def main():
         #records a transaction
         if command == 'record':  
             print('You have chosen to record a transaction.')
-            #boolean used to check the status of the transaction. Used later to check if user wants to record another transaction. 
-            transaction_status = True
-            while True:
-                while transaction_status: #loop to get the user to enter a transaction
-                    #gets user input on what kind of transaction it is 
-                    print('Is the transaction a deposit or withdrawal?')
-                    type_of_transaction = input('+ for deposit, - for withdrawal. Enter here: ')
-                    #records the transaction and its type into the transactions list
-                    rm.recording_transaction(rm.type_of_transaction(type_of_transaction), transactions)
-                    transaction_status = False #sets the loop to false
+            rm.record_loop(transactions)
                    
-                #checks if user wants to add another transaction 
-                print('Would you like to record another transaction?')
-                another_transaction = input('Enter here(yes/no): ').lower()  
-
-                if another_transaction == 'yes':
-                    transaction_status = True
-
-                elif another_transaction == 'no':
-                    print()
-                    break
-
-                else: 
-                    print('You have entered an invalid command. Please try again.\n')
-                    continue
-                
-
         #shows total amount stored
         elif command == 'total':
             print(f'Your total is ${total}\n')

@@ -1,51 +1,74 @@
-"""Module with functions created to record user's transactions"""
+"""
+Transaction Recording Module
 
-def another_transaction() -> bool:
+This module provides functions to interactively record and manage 
+user transactions, such as deposits and withdrawals. It includes 
+functions for user input validation, handling transaction types, 
+and updating a list of transactions.
+
+Functions:
+    get_another_transaction() -> bool:
+        Asks the user if they want to record another transaction.
+
+    get_typeof_transaction() -> int:
+        Gets the user's input for the type of transaction 
+        (deposit or withdrawal) and returns 1 for deposit or -1 for withdrawal.
+
+    recording_transaction(transaction_type: int, transactions_list: list):
+        Prompts the user for a valid transaction amount and appends 
+        the value to the transactions list.
+
+    record_loop(transactions: list):
+        Main loop that handles recording multiple transactions and 
+        checks if the user wants to continue recording transactions.
+"""
+
+def get_another_transaction() -> bool:
     """
     Ask user if they want to record another transaction.
     Return:
         (bool): True or False for 'yes' and 'no' accordingly.
     """
-    print('Would you like to record another transaction?')
+    print('Would you like to record another transaction?(yes/no)')
     while True:
-        another_transaction_input = input('Enter here(yes/no): ').lower()  
+        another_transaction_input = input('Enter here: ').lower()  
 
         if another_transaction_input == 'yes':
             return True
         elif another_transaction_input == 'no':
             return False
         else: 
-            print('You have entered an invalid command. Please try again.')
+            print('Invalid input. Please enter yes or no.')
             continue
                 
 
-def type_of_transaction() -> int:
+def get_transaction_type() -> int:
     """
     Gets user input on what kind of transaction they want and returns a positive or negative number.
     Return:
         value (int): -1 for withdrawl, 1 for deposit.
     """
+    DEPOSIT = 1
+    WITHDRAWAL = -1
 
-    print('Is the transaction a deposit or withdrawal?')
-    transaction_type = input('+ for deposit, - for withdrawal. Enter here: ')
-
-    while True:      
+    print('Is the transaction a deposit or withdrawal? + for deposit, - for withdrawal.')
+    while True: 
+            transaction_type = input('Enter here: ')
+     
             if transaction_type == '+':
-                return 1  # Deposit, so no negative sign    
+                return DEPOSIT  
             elif transaction_type == '-':
-                return -1   
+                return WITHDRAWAL
             else:
-                print('You have entered an invalid type. Please try again.')
-                transaction_type = input('+ for deposit, - for withdrawal. Enter here: ')
+                print('Invalid input. Please enter + or -.')
                 continue
     
         
 def recording_transaction(transaction_type: int, transactions_list: list):
     """
-    Processes a transaction by determining its type (deposit or withdrawal) 
-    and prompts the user for a valid transaction amount. The function 
-    appends the transaction amount to the transactions list depending on 
-    its type (positive for deposits, negative for withdrawals).
+    Records a transaction based on its type (deposit or withdrawal) and 
+    prompts the user for a valid amount. The amount is added to the 
+    transactions list as positive for deposits and negative for withdrawals.
 
     Args:
         transaction_type (int): -1 for withdrawl, 1 for deposit.
@@ -62,3 +85,26 @@ def recording_transaction(transaction_type: int, transactions_list: list):
             print('Invalid input. Please enter a valid number.')
     
 
+def record_loop(transactions):
+    """
+    Main loop of recording user's transactions. Records user's transactions and prompts him to record more if wanted.
+
+    Args:
+        transactions (list): list consiting of float values which represent user's transactions.
+    """
+    #boolean used to check the status of the transaction. Used later to check if user wants to record another transaction. 
+    transaction_status = True
+    while True:#main loop
+        while transaction_status: 
+            transaction_type = get_transaction_type() #determines if deposit or withdrawal
+            recording_transaction(transaction_type, transactions)
+            transaction_status = False #sets the loop to false
+
+        #checks if user wants another transaction
+        if get_another_transaction():
+            transaction_status = True #resets loop
+        else:
+            break
+    print()#space for readability after function ended
+    
+    
