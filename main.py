@@ -74,8 +74,8 @@ def main():
         
 
         #FOR FUTURE
-        #1. Modularize code.
-        #1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type
+        #1. Modularize code. (DONE)
+        #1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type (DONE)
         #2. Add a feature that will automatically record when a transaction was made.
         #3. Adds features to show transactions in orderL ascedning amount, descending amount, by date. 
 if __name__ == "__main__":
