@@ -60,24 +60,10 @@ def main():
                     #gets user input on what kind of transaction it is 
                     print('Is the transaction a deposit or withdrawal?')
                     type_of_transaction = input('+ for deposit, - for withdrawal. Enter here: ')
-
-                    #if depoist
-                    if type_of_transaction == '+':
-                        rm.type_of_transaction(type_of_transaction, transactions)
-                        transaction_status = False#sets to false so the loop doesn't activate again unless the user wants to do another transaction
-                        break
-
-                    #if withdrawal
-                    elif type_of_transaction == '-':
-                        rm.type_of_transaction(type_of_transaction, transactions)
-                        transaction_status = False#sets to false so the loop doesn't activate again unless the user wants to do another transaction
-                        break
-
-                    #if invalid input
-                    else:
-                        print('You have entered an invalid command. Please try again.\n')
-                        continue
-                
+                    #records the transaction and its type into the transactions list
+                    rm.recording_transaction(rm.type_of_transaction(type_of_transaction), transactions)
+                    transaction_status = False #sets the loop to false
+                   
                 #checks if user wants to add another transaction 
                 print('Would you like to record another transaction?')
                 another_transaction = input('Enter here(yes/no): ').lower()  

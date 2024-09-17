@@ -11,9 +11,8 @@ def type_of_transaction(transaction_type: str) -> int:
                 break
             else:
                 print('You have entered an invalid type. Please try again.')
-                transaction_type = input('+ for deposit, - for withdrawal. Enter here: '))
+                transaction_type = input('+ for deposit, - for withdrawal. Enter here: ')
                 continue
-
     return sign 
         
 def recording_transaction(transaction_type: int, transactions_list: list):
@@ -36,5 +35,5 @@ def recording_transaction(transaction_type: int, transactions_list: list):
             break
         except ValueError:
             # If the user enters something that's not a number, this message will show
-            print('Invalid input. Please enter a valid number.\n')
+            print('Invalid input. Please enter a valid number.')
     
