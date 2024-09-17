@@ -1,3 +1,21 @@
+"""
+Rainy Day Cash App Module
+
+This module allows users to track their saved cash for a "rainy day." 
+It provides features for recording deposits and withdrawals, viewing 
+all transactions, and calculating the total balance.
+
+Functions:
+    welcome_message(): 
+        Displays a welcome message and an overview of the app's purpose.
+
+    command_list(): 
+        Prints a list of available commands in the app.
+
+    total_amount(transactions: list) -> float: 
+        Calculates and returns the total balance of transactions.
+"""
+
 def welcome_message():
     print("""
     Welcome to Raindy Day Cash App!
@@ -31,4 +49,4 @@ def total_amount(transactions: list) -> float:
     float: total balance after summing up all transactions. 
     """
 
-    return round(sum(transaction for transaction in transactions), 2)
+    return round(sum(transactions), 2)

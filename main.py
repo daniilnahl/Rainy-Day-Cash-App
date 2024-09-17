@@ -1,5 +1,6 @@
 import records_module as rm
-import main_module as mm     
+import main_module as mm
+     
 def main():
     #welcome message with initial view of the commands
     mm.welcome_message()
