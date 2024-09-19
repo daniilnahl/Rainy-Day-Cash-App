@@ -48,5 +48,7 @@ def total_amount(transactions: list) -> float:
     Return:
     float: total balance after summing up all transactions. 
     """
-
-    return round(sum(transactions[0]), 2)
+    summ = 0
+    return round(sum(transaction[0] for transaction in transactions), 2) #returns the rounded sum of all transactions first element which is the amount of each transaction
+    
+    
