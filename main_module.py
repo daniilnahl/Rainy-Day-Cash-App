@@ -49,4 +49,4 @@ def total_amount(transactions: list) -> float:
     float: total balance after summing up all transactions. 
     """
 
-    return round(sum(transactions), 2)
+    return round(sum(transactions[0]), 2)

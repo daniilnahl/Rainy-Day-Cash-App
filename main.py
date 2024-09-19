@@ -8,7 +8,7 @@ def main():
     
     #variables
     transactions = []  
-    print(time.strftime("%Y-%m-%d", time.localtime()))
+
     while True:
         #updates the total amount of money with each cycle 
         total = mm.total_amount(transactions)

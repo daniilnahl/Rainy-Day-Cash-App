@@ -39,7 +39,7 @@ def get_another_transaction() -> bool:
         elif another_transaction_input == 'no':
             return False
         else: 
-            print('Invalid input. Please enter yes or no.')
+            print('Invalid input. Please enter yes or no')
             continue
                 
 
@@ -61,7 +61,7 @@ def get_transaction_type() -> int:
             elif transaction_type == '-':
                 return WITHDRAWAL
             else:
-                print('Invalid input. Please enter + or -.')
+                print('Invalid input. Please enter + or -')
                 continue
     
         
@@ -70,10 +70,12 @@ def recording_transaction(transaction_type: int, transactions_list: list):
     Records a transaction based on its type (deposit or withdrawal) and 
     prompts the user for a valid amount. The amount is added to the 
     transactions list as positive for deposits and negative for withdrawals.
+    Additionally, records the date of the transaction.
 
     Args:
         transaction_type (int): -1 for withdrawl, 1 for deposit.
         transactions_list (list): A list which stores transactions.
+        Each transaction is a list which holds the amount and date.
     """
     #temporary list to hold transaction information
     transaction = []
@@ -84,7 +86,7 @@ def recording_transaction(transaction_type: int, transactions_list: list):
             print(f'You have recorded a transaction of ${amount}.\n')
             transaction.append(transaction_type * amount)#records positive amount if addition of money
             transaction.append(time.strftime("%Y-%m-%d", time.localtime()))#records the date the transaction was made
-            transactions_list.append(transaction)
+            transactions_list.append(transaction)#records the transaction into list of transactions
             break
         except ValueError:
             # If the user enters something that's not a number, this message will show
