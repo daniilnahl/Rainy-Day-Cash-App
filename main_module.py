@@ -31,7 +31,8 @@ money into a stash is a responsibility of the user.
 
 def command_list():
     print("""COMMAND LIST
-record - record a transaction to the tracker.
+add - record a transaction to the tracker.
+delete - remove a transaction from the tracker.
 transactions - view all transactions.      
 total - view the total amount.
 help - view the command list.
