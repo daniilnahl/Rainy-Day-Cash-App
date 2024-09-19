@@ -22,6 +22,7 @@ Functions:
         Main loop that handles recording multiple transactions and 
         checks if the user wants to continue recording transactions.
 """
+import time
 
 def get_another_transaction() -> bool:
     """
@@ -74,11 +75,16 @@ def recording_transaction(transaction_type: int, transactions_list: list):
         transaction_type (int): -1 for withdrawl, 1 for deposit.
         transactions_list (list): A list which stores transactions.
     """
+    #temporary list to hold transaction information
+    transaction = []
     while True:
         try:# Keep prompting the user until a valid number is entered
+            time_during_transaction = time.localtime() #
             amount = float(input('Enter the amount: '))
             print(f'You have recorded a transaction of ${amount}.\n')
-            transactions_list.append(transaction_type * amount)#records positive amount if addition of money
+            transaction.append(transaction_type * amount)#records positive amount if addition of money
+            transaction.append(time.strftime("%Y-%m-%d", time.localtime()))#records the date the transaction was made
+            transactions_list.append(transaction)
             break
         except ValueError:
             # If the user enters something that's not a number, this message will show

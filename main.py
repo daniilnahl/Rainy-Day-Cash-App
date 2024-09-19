@@ -1,6 +1,6 @@
 import records_module as rm
 import main_module as mm
-     
+import time     
 def main():
     #welcome message with initial view of the commands
     mm.welcome_message()
@@ -8,7 +8,7 @@ def main():
     
     #variables
     transactions = []  
-
+    print(time.strftime("%Y-%m-%d", time.localtime()))
     while True:
         #updates the total amount of money with each cycle 
         total = mm.total_amount(transactions)
@@ -40,8 +40,8 @@ def main():
         
 
         #FOR FUTURE
-        #1. Modularize code. (DONE)
-        #1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type (DONE)
+        #(DONE)1. Modularize code. 
+        #(DONE)1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type 
         #2. Add a feature that will automatically record when a transaction was made.
         #3. Adds features to show transactions in orderL ascedning amount, descending amount, by date. 
 if __name__ == "__main__":
