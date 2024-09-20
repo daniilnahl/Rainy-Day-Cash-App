@@ -8,4 +8,15 @@ def show_transactions(type_of_command: str,transactions: list):
 
 
 def delete_transaction(transactions):
-    return 1
+    show_transactions('delete',transactions)
+    print('Enter the number before the transaction that you would like to delete.')
+    while True:
+        try: #keeps prompting user to enter a valid label for a transaction to be deleted
+            delete_transaction = int(input('Enter numbered label: '))
+            transaction_index = delete_transaction - 1
+            print(f"Succesfully deleted transaction {delete_transaction}. {transactions[transaction_index]}\n")
+            del transactions[transaction_index]
+            break
+        except ValueError:
+            print(f"You have entered an invalid label value. You can only enter an integer such as '1'")
+    #add a check for if a transaction exists, add a check if a user is entering a integer non decimal for the "labeled transaction"

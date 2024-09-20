@@ -23,12 +23,8 @@ def main():
 
         #deletes a transaction
         elif command == 'delete':
-            ocm.show_transactions(transactions)
-            print('Which transaction would you like to delete?')
-            delete_transaction = input('Enter its numbered label: ')
-            print(f"Succesfully deleted transaction {delete_transaction}. {transactions[int(delete_transaction) - 1]}\n")
-            del transactions[int(delete_transaction) - 1]
-
+           ocm.delete_transaction(transactions)
+           
         #modify a transaction
         elif command == 'modify':
             print('pp')
@@ -39,7 +35,7 @@ def main():
 
         #shows all the recorded transactions
         elif command == 'transactions':
-            ocm.show_transactions(transactions)
+            ocm.show_transactions('transactions', transactions)
 
         elif command == 'quit':
             break   
