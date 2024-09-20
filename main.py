@@ -1,6 +1,6 @@
 import records_module as rm
 import main_module as mm
-import time     
+import other_commands_module as ocm    
 def main():
     #welcome message with initial view of the commands
     mm.welcome_message()
@@ -23,14 +23,22 @@ def main():
 
         #deletes a transaction
         elif command == 'delete':
-            
+            ocm.show_transactions(transactions)
+            print('Which transaction would you like to delete?')
+            delete_transaction = input(int('Enter its numbered label: '))
+            del transactions(delete_transaction - 1)
+
+        #modify a transaction
+        elif command == 'modify':
+            print('pp')
+        
         #shows total amount stored
         elif command == 'total':
             print(f'Your total is ${total}\n')
 
         #shows all the recorded transactions
         elif command == 'transactions':
-            print('\n'.join(str(transaction) + '$' for transaction in transactions))
+            ocm.show_transactions(transactions)
 
         elif command == 'quit':
             break   
