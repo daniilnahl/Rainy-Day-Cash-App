@@ -81,11 +81,10 @@ def recording_transaction(transaction_type: int, transactions_list: list):
     transaction = []
     while True:
         try:# Keep prompting the user until a valid number is entered
-            time_during_transaction = time.localtime() #
             amount = float(input('Enter the amount: '))
             print(f'You have recorded a transaction of ${amount}.\n')
             transaction.append(transaction_type * amount)#records positive amount if addition of money
-            transaction.append(time.strftime("%Y-%m-%d", time.localtime()))#records the date the transaction was made
+            transaction.append(time.strftime("%Y-%m-%d", time.localtime()))#records the date the transaction was made in a year-month-day format
             transactions_list.append(transaction)#records the transaction into list of transactions
             break
         except ValueError:
