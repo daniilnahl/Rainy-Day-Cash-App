@@ -1,16 +1,11 @@
 """
 Other Commands Module
-
 This module provides functionality for displaying, modifiying and deleting transactions.
-It includes three functions:
-1. `show_transactions`: Displays the current list of transactions based on a specified command.
-2. `delete_transaction`: Prompts the user to delete a transaction.
-3. 'modify_transaction': Prompts the user to modify a transaction. 
 
 Functions:
-    show_transactions(type_of_command: str, transactions: list) -> None
-    delete_transaction(transactions: list) -> None
-    modify_transaction(transactions: list) -> None
+    show_transactions(type_of_command: str, transactions: list) -> None.  Displays the current list of transactions based on a specified command.
+    delete_transaction(transactions: list) -> None  Prompts the user to delete a transaction.
+    modify_transaction(transactions: list) -> None Prompts the user to modify a transaction. 
 """
 
 def show_transactions(type_of_command: str,transactions: list):

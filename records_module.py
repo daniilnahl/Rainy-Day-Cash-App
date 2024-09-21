@@ -7,20 +7,10 @@ functions for user input validation, handling transaction types,
 and updating a list of transactions.
 
 Functions:
-    get_another_transaction() -> bool:
-        Asks the user if they want to record another transaction.
-
-    get_typeof_transaction() -> int:
-        Gets the user's input for the type of transaction 
-        (deposit or withdrawal) and returns 1 for deposit or -1 for withdrawal.
-
-    recording_transaction(transaction_type: int, transactions_list: list):
-        Prompts the user for a valid transaction amount and appends 
-        the value to the transactions list.
-
-    record_loop(transactions: list):
-        Main loop that handles recording multiple transactions and 
-        checks if the user wants to continue recording transactions.
+    get_another_transaction() -> bool: Asks the user if they want to record another transaction.
+    get_typeof_transaction() -> int: Gets the user's input for the type of transaction (deposit or withdrawal) and returns 1 for deposit or -1 for withdrawal.
+    recording_transaction(transaction_type: int, transactions_list: list): -> None. Prompts the user for a valid transaction amount and appends the value to the transactions list.
+    record_loop(transactions: list): -> None. Main loop that handles recording multiple transactions and checks if the user wants to continue recording transactions.
 """
 import time
 
