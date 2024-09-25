@@ -107,4 +107,4 @@ def modify_transaction(transactions):
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
         
             
-   
+   #ADDED VARIABLES INSTEAD OF JUST TRUE. ITS HARD TO FOLLOW.
