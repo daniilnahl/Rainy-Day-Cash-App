@@ -64,6 +64,7 @@ def delete_transaction(transactions):
                  print('Invalid input. Please enter an integer number corresponding to a transaction.')
 
 def modify_transaction(transactions):
+    show_transactions('modify', transactions)
     print('Enter the number before the transaction that you would like to modify.')
     while True:
         try: 
@@ -79,26 +80,29 @@ def modify_transaction(transactions):
             else:
                 print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
                 while True:
-                    modified_part = int(input('Enter 0 for amount, and 1 for date: '))
-                     #modifies the amount
-                    if modified_part == 0:
-                        while True:
-                                try: 
-                                    modified_amount = float(input('Enter the replacament amount'))
-                                    transactions[transaction_index][0] = modified_amount#assigns the new amount 
-                                    break
-                                except ValueError:#handles input which cant be converted to a float
-                                    print('You have entered an invalid amount. Please enter a number.')
-                        break#stops the loop for choosing the modifying part
-                    #modifies the date
-                    elif modified_part == 1: 
-                        modified_date = input('Enter the replacement date in the same format as former.')
-                        transactions[transaction_index][1] = modified_date#assigns the new date
-                        break
-                    else:#if user doesnt enter a num for amount or date
-                        print('Invalid input. Enter 0 for amount, and 1 for date.')
-                        continue
-                                
+                    try:
+                        modified_part = int(input('Enter 0 for amount, and 1 for date: '))
+                        #modifies the amount
+                        if modified_part == 0:
+                            while True:
+                                    try: 
+                                        modified_amount = float(input('Enter the replacament amount: '))
+                                        transactions[transaction_index][0] = modified_amount#assigns the new amount 
+                                        break
+                                    except ValueError:#handles input which cant be converted to a float
+                                        print('You have entered an invalid amount. Please enter a number.')
+                            break#stops the loop for choosing the modifying part
+                        #modifies the date
+                        elif modified_part == 1: 
+                            modified_date = input('Enter the replacement date in the same format as former: ')
+                            transactions[transaction_index][1] = modified_date#assigns the new date
+                            break
+                        else:#if user doesnt enter a num for amount or date
+                            print('No modifiable data at this number.')
+                            continue
+                    except ValueError:
+                        print('Invalid Input. You can only enter an integer number.')
+            break                   
         except ValueError:# Handle invalid input that isn't an integer
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
         

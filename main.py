@@ -27,7 +27,7 @@ def main():
            
         #modify a transaction
         elif command == 'modify':
-            print('pp')
+            ocm.modify_transaction(transactions)
         
         #shows total amount stored
         elif command == 'total':

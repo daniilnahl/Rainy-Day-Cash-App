@@ -28,6 +28,7 @@ def command_list():
     print("""COMMAND LIST
 add - record a transaction to the tracker.
 delete - remove a transaction from the tracker.
+modify - modify a transaction.
 transactions - view all transactions.      
 total - view the total amount.
 help - view the command list.
