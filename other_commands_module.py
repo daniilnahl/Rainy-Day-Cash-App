@@ -69,7 +69,7 @@ def modify_transaction(transactions):
     while True:
         try: 
             #Prompts user to enter a valid label 
-            modify_transaction = int(input('Enter numbered label: ')) 
+            modify_transaction = int(input('Enter here: ')) 
             #calculates transaction index
             transaction_index = modify_transaction - 1 
 
@@ -94,17 +94,63 @@ def modify_transaction(transactions):
                             break#stops the loop for choosing the modifying part
                         #modifies the date
                         elif modified_part == 1: 
-                            modified_date = input('Enter the replacement date in the same format as former: ')
-                            transactions[transaction_index][1] = modified_date#assigns the new date
+                            modifying_transaction_date(transactions)
+                           
+
+                           
                             break
                         else:#if user doesnt enter a num for amount or date
                             print('No modifiable data at this number.')
                             continue
                     except ValueError:
                         print('Invalid Input. You can only enter an integer number.')
-            break                   
+                break                   
         except ValueError:# Handle invalid input that isn't an integer
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
         
             
-   #ADDED VARIABLES INSTEAD OF JUST TRUE. ITS HARD TO FOLLOW.
+def modifying_transaction_date(transactions):
+    modified_date = ''
+
+    valid_year = True
+    while valid_year:
+        try:
+            modified_year = int(input('Enter the year: '))
+            if modified_year >= 2000 and modified_year <= 3000:
+                modified_date += str(modified_year) + "-"
+                valid_year = False
+            else:
+                print('Year must be between 2000 and 3000. Try again.')
+        except ValueError:
+            print('Invalid Input. Please enter an integer for the year.')
+
+    valid_month = True
+    modified_month = 0
+    while valid_month:
+        try:
+            modified_month = int(input('Enter the month: '))
+            if modified_month >= 1 and modified_month <= 12:
+                modified_date += str(modified_month) + "-"
+                valid_month = False
+            else:
+                print('Month must be between 1 and 12. Try again.')
+        except ValueError:
+            print('Invalid Input. Please enter an integer for the month.')
+
+    valid_day = True
+    days_in_months = {31:[1, 3, 5, 7, 8, 10, 12], 30:[4, 6, 9, 11], 28: 2}# how many days in each month by their calendaric number
+    day_limit = 0
+    for days, month in days_in_months(): #assigns the limit of days by the month user entered
+        if modified_month == month:
+            day_limit = days
+
+    while valid_day:
+        try:
+            modified_day = int(input('Enter the day: '))
+            if modified_day >= 1 and :
+                modified_date += str(modified_year) + "-"
+                valid_day = False
+            else:
+                print('Year must be between 2000 and 3000. Try again.')
+        except ValueError:
+            print('Invalid Input. Please enter an integer for the year.')

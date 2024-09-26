@@ -13,7 +13,7 @@ Functions:
 
 def welcome_message():
     print("""
-    Welcome to Raindy Day Cash App!
+Welcome to Raindy Day Cash App!
 Here you can track how much cash you have saved for your "rainy" day.
 The current features are adding and removing deposits, and viewing the 
 total amount saved.
