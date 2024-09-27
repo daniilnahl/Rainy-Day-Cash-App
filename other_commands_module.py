@@ -94,10 +94,9 @@ def modify_transaction(transactions):
                             break#stops the loop for choosing the modifying part
                         #modifies the date
                         elif modified_part == 1: 
-                            modifying_transaction_date(transactions)
-                           
-
-                           
+                            #stores the new date
+                            new_date = modifying_transaction_date()
+                            transactions[transaction_index][1] = new_date#assigns the new date 
                             break
                         else:#if user doesnt enter a num for amount or date
                             print('No modifiable data at this number.')
@@ -109,7 +108,7 @@ def modify_transaction(transactions):
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
         
             
-def modifying_transaction_date(transactions):
+def modifying_transaction_date():
     modified_date = ''
 
     valid_year = True
@@ -122,7 +121,7 @@ def modifying_transaction_date(transactions):
             else:
                 print('Year must be between 2000 and 3000. Try again.')
         except ValueError:
-            print('Invalid Input. Please enter an integer for the year.')
+            print('Invalid input. Please enter an integer for the year.')
 
     valid_month = True
     modified_month = 0
@@ -135,22 +134,22 @@ def modifying_transaction_date(transactions):
             else:
                 print('Month must be between 1 and 12. Try again.')
         except ValueError:
-            print('Invalid Input. Please enter an integer for the month.')
+            print('Invalid input. Please enter an integer for the month.')
 
+   
+    #dictionary for days in each month by their calendaric number
+    days_in_months = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
+    day_limit = days_in_months[modified_month] #assigns the limit of days by the month user entered
     valid_day = True
-    days_in_months = {31:[1, 3, 5, 7, 8, 10, 12], 30:[4, 6, 9, 11], 28: 2}# how many days in each month by their calendaric number
-    day_limit = 0
-    for days, month in days_in_months(): #assigns the limit of days by the month user entered
-        if modified_month == month:
-            day_limit = days
-
     while valid_day:
         try:
             modified_day = int(input('Enter the day: '))
-            if modified_day >= 1 and :
-                modified_date += str(modified_year) + "-"
+            if modified_day >= 1 and modified_day <= day_limit:
+                modified_date += str(modified_day)
                 valid_day = False
             else:
-                print('Year must be between 2000 and 3000. Try again.')
+                print(f'Day must be between 1 and {day_limit}. Try again.')
         except ValueError:
-            print('Invalid Input. Please enter an integer for the year.')
+            print('Invalid input. Please enter an integer for the day.')
+
+    return modified_date

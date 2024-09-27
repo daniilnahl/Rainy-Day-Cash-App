@@ -7,7 +7,7 @@ def main():
     mm.command_list()
     
     #variables
-    transactions = []  
+    transactions = [[-12.1, '2024-09-27']]  
 
     while True:
         #updates the total amount of money with each cycle 
