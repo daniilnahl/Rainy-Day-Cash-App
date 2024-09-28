@@ -115,10 +115,11 @@ def modifying_transaction_date():
 
     modified_date += loop_for_date('year') + '-'
     #doesnt directly assign to new date because we need to use the month to set the limit for day
-    modified_month = loop_for_date('month') + '-'
-    modified_date += modified_month
+    modified_month = loop_for_date('month')
+    modified_date += modified_month + '-'
     modified_date += loop_for_date('day', int(modified_month))
     
+    print(f'Successfully assigned new date. Now the date is {modified_date}.')
     return modified_date
 
 def loop_for_date(time_type: str, month=0) -> str:
