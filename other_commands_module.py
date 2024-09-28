@@ -87,6 +87,7 @@ def modify_transaction(transactions):
                             while True:
                                     try: 
                                         modified_amount = float(input('Enter the replacament amount: '))
+                                        print(f'Successfully assigned new value. Now the amount is {modified_amount}.')
                                         transactions[transaction_index][0] = modified_amount#assigns the new amount 
                                         break
                                     except ValueError:#handles input which cant be converted to a float
@@ -152,4 +153,40 @@ def modifying_transaction_date():
         except ValueError:
             print('Invalid input. Please enter an integer for the day.')
 
+    print(f'Successfully assigned new date. Now the date is {modified_date}.\n')
     return modified_date
+
+def loop_for_date(type: str):
+    
+    key_word = ''
+    oob_input_mssg = ''
+    bottom_limit = 0
+    top_limit = 0
+
+    if type == 'year':
+        key_word = 'year'
+        oob_input_mssg = 'The value of year must be between 2000 and 3000. Try again.'
+        bottom_limit = 2000
+        top_limit = 3000
+
+    elif type == 'month':
+        key_word = 'month'
+        oob_input_mssg = 'Month must be between 1 and 12. Try again.'
+        bottom_limit = 1
+        top_limit = 12
+
+    elif type == 'day':
+        key_word = 'day'
+        oob_input_mssg = ''
+        bottom_limit = 1
+        top_limit = 0
+
+    while True:
+        try:
+            modified_num = int(input(f'Enter the {key_word}: '))
+            if modified_num >= bottom_limit and modified_num <= top_limit:    
+                return str(modified_num)
+            else:
+                print()
+        except ValueError:
+            print(f'Invalid input. Please enter an integer for the {key_word}.')           
