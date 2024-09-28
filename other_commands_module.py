@@ -103,7 +103,7 @@ def modify_transaction(transactions):
                             print('No modifiable data at this number.')
                             continue
                     except ValueError:
-                        print('Invalid Input. You can only enter an integer number.')
+                        print('Invalid input. You can only enter an integer number. ERROR MOD TRNS')
                 break                   
         except ValueError:# Handle invalid input that isn't an integer
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
@@ -111,82 +111,42 @@ def modify_transaction(transactions):
             
 def modifying_transaction_date():
     modified_date = ''
+    modified_month = ''
 
-    valid_year = True
-    while valid_year:
-        try:
-            modified_year = int(input('Enter the year: '))
-            if modified_year >= 2000 and modified_year <= 3000:
-                modified_date += str(modified_year) + "-"
-                valid_year = False
-            else:
-                print('Year must be between 2000 and 3000. Try again.')
-        except ValueError:
-            print('Invalid input. Please enter an integer for the year.')
-
-    valid_month = True
-    modified_month = 0
-    while valid_month:
-        try:
-            modified_month = int(input('Enter the month: '))
-            if modified_month >= 1 and modified_month <= 12:
-                modified_date += str(modified_month) + "-"
-                valid_month = False
-            else:
-                print('Month must be between 1 and 12. Try again.')
-        except ValueError:
-            print('Invalid input. Please enter an integer for the month.')
-
-   
-    #dictionary for days in each month by their calendaric number
-    days_in_months = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
-    day_limit = days_in_months[modified_month] #assigns the limit of days by the month user entered
-    valid_day = True
-    while valid_day:
-        try:
-            modified_day = int(input('Enter the day: '))
-            if modified_day >= 1 and modified_day <= day_limit:
-                modified_date += str(modified_day)
-                valid_day = False
-            else:
-                print(f'Day must be between 1 and {day_limit}. Try again.')
-        except ValueError:
-            print('Invalid input. Please enter an integer for the day.')
-
-    print(f'Successfully assigned new date. Now the date is {modified_date}.\n')
+    modified_date += loop_for_date('year') + '-'
+    #doesnt directly assign to new date because we need to use the month to set the limit for day
+    modified_month = loop_for_date('month') + '-'
+    modified_date += modified_month
+    modified_date += loop_for_date('day', int(modified_month))
+    
     return modified_date
 
-def loop_for_date(type: str):
-    
-    key_word = ''
-    oob_input_mssg = ''
+def loop_for_date(time_type: str, month=0) -> str:
+    """"""
+    #variables for bounds of user input
     bottom_limit = 0
     top_limit = 0
 
-    if type == 'year':
-        key_word = 'year'
-        oob_input_mssg = 'The value of year must be between 2000 and 3000. Try again.'
+    #assigns the limits based on type of time 
+    if time_type == 'year':
         bottom_limit = 2000
-        top_limit = 3000
-
-    elif type == 'month':
-        key_word = 'month'
-        oob_input_mssg = 'Month must be between 1 and 12. Try again.'
+        top_limit = 3000          
+    elif time_type == 'month':
         bottom_limit = 1
-        top_limit = 12
-
-    elif type == 'day':
-        key_word = 'day'
-        oob_input_mssg = ''
+        top_limit = 12        
+    elif time_type == 'day':
         bottom_limit = 1
-        top_limit = 0
-
-    while True:
+        #dictionary for days in each month by their calendaric number
+        days_in_months = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
+        top_limit = days_in_months[month] #assigns the limit of days by the month user entered
+        
+    while True:#loops until the user enters a valid amount for specified type of time
         try:
-            modified_num = int(input(f'Enter the {key_word}: '))
-            if modified_num >= bottom_limit and modified_num <= top_limit:    
-                return str(modified_num)
+            modified_num = int(input(f'Enter the {time_type}: '))
+            #checks the limits
+            if modified_num >= bottom_limit and modified_num <= top_limit: 
+                return str(modified_num)#returns the string version of modded num
             else:
-                print()
+                print(f'The value of {time_type} must be between {bottom_limit} and {top_limit}. Try again.')
         except ValueError:
-            print(f'Invalid input. Please enter an integer for the {key_word}.')           
+            print(f'Invalid input. Please enter an integer for the {time_type}. ERROR LFD')           
