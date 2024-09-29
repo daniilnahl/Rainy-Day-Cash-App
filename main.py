@@ -23,11 +23,11 @@ def main():
 
         #deletes a transaction
         elif command == 'delete':
-           ocm.delete_transaction(transactions)
+           ocm.mod_or_del_transaction(command, transactions)
            
         #modify a transaction
         elif command == 'modify':
-            ocm.modify_transaction(transactions)
+            ocm.mod_or_del_transaction(command, transactions)
         
         #shows total amount stored
         elif command == 'total':

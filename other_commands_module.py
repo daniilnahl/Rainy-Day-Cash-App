@@ -58,7 +58,7 @@ def mod_or_del_transaction(command_type: str, transactions: list):
                     del transactions[transaction_index]#deletes the transaction element  
                 break                   
         except ValueError:# Handle invalid input that isn't an integer
-            print('Invalid input. Please enter an integer number corresponding to a transaction.')
+            print('Invalid input type. Please enter an integer number corresponding to a transaction.')
 
 def modifying_transaction_choice(transactions: list, transaction_index: int):
     print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
@@ -68,6 +68,7 @@ def modifying_transaction_choice(transactions: list, transaction_index: int):
             #modifies the amount
             if modified_part == 0:
                 transactions[transaction_index][0] = modifying_transaction_amount() 
+                break
             #modifies the date
             elif modified_part == 1: 
                 #stores the new date
@@ -77,8 +78,7 @@ def modifying_transaction_choice(transactions: list, transaction_index: int):
                 print('No modifiable data at this number.')
                 continue
         except ValueError:
-                print('Invalid input. You can only enter an integer number. ERROR MOD TRNS')
-        break   
+            print('Invalid input type. Please enter an integer.') 
     
 def modifying_transaction_amount():
     while True:
@@ -88,7 +88,7 @@ def modifying_transaction_amount():
             return modified_amount#assigns the new amount 
             
         except ValueError:#handles input which cant be converted to a float
-            print('You have entered an invalid amount. Please enter a number.')
+            print('You have entered an invalid input type. Please enter an int or float number.')
     
 def modifying_transaction_date():
     modified_date = ''
@@ -131,4 +131,4 @@ def loop_for_date(time_type: str, month=0) -> str:
             else:
                 print(f'The value of {time_type} must be between {bottom_limit} and {top_limit}. Try again.')
         except ValueError:
-            print(f'Invalid input. Please enter an integer for the {time_type}. ERROR LFD')           
+            print(f'Invalid input type. Please enter an integer for the {time_type}. ERROR LFD')           
