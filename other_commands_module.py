@@ -4,11 +4,11 @@ This module provides functionality for displaying, modifiying and deleting trans
 
 Functions:
     show_transactions(type_of_command: str, transactions: list) -> None.  Displays the current list of transactions based on a specified command.
-    mod_or_del_transaction(command_type: str, transactions: list) -> None. Modifies or deletes a transaction.
-    modifying_transaction_choice(transactions: list, transaction_index: int) -> None. Modifies time or amount based on user input.
-    modifying_transaction_amount() -> Returns new amount for transaction user modified. Gets user input for amount they want to assign to modded transaction.
-    modifying_transaction_date() -> Returns new date for transaction user modified. Creates a formatted date for transaction user modified.
-    loop_for_date(time_type: str, month=0) -> Returns a type of time for user's new date. Gets info from user to create a formatted date.
+    mod_or_del_transaction(command_type: str, transactions: list) -> None. Modifies or deletes a transaction based on user input.
+    modifying_transaction_choice(transactions: list, transaction_index: int) -> None.  Modifies the time or amount of a specified transaction.
+    modifying_transaction_amount() ->Returns a new amount for the modified transaction based on user input.
+    modifying_transaction_date() -> Returns a new date for the modified transaction based on user input.
+    loop_for_date(time_type: str, month=0) -> Returns components of a formatted date based on user input for year, month, or day.
 """
 
 def show_transactions(type_of_command: str,transactions: list):
@@ -16,13 +16,11 @@ def show_transactions(type_of_command: str,transactions: list):
     Display transactions based on the command type.
 
     Args:
-        type_of_command (str): A command that determines how transactions are displayed. 
-            - If 'delete', it displays all transactions with header "CHOOSE A TRANSACTION TO DELETE".
-            - If 'transactions', it displays all transactions with header "VIEWING ALL TRANSACTIONS".
+        type_of_command (str): Specifies how to display transactions.
         transactions (list): A list of transactions to be displayed.
 
     Returns:
-        None: Prints the transactions in the appropriate format based on the command.
+        None
     """
     transactions_showcase = f'\n'.join(f'{index + 1}. {transaction}' for index, transaction in enumerate(transactions))
     
@@ -34,6 +32,16 @@ def show_transactions(type_of_command: str,transactions: list):
          print(f'CHOOSE A TRANSACTION TO MODIFY\n{transactions_showcase}')
 
 def mod_or_del_transaction(command_type: str, transactions: list):
+    """
+    Modifies or deletes a transaction based on user input.
+
+    Args:
+        command_type (str): Specifies whether to 'modify' or 'delete' a transaction.
+        transactions (list): A list of transactions to modify or delete.
+
+    Returns:
+        None
+    """
     if command_type == 'modify':
         show_transactions('modify', transactions)
     elif command_type == 'delete':
@@ -61,6 +69,16 @@ def mod_or_del_transaction(command_type: str, transactions: list):
             print('Invalid input type. Please enter an integer number corresponding to a transaction.')
 
 def modifying_transaction_choice(transactions: list, transaction_index: int):
+    """
+    Prompt user to modify the amount or date of a specific transaction.
+
+    Args:
+        transactions (list): A list of transactions.
+        transaction_index (int): The index of the transaction to modify.
+
+    Returns:
+        None
+    """
     print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
     while True:
         try:
@@ -81,6 +99,13 @@ def modifying_transaction_choice(transactions: list, transaction_index: int):
             print('Invalid input type. Please enter an integer.') 
     
 def modifying_transaction_amount():
+    """
+    Gets a new amount for the modified transaction.
+
+    Returns:
+        float: The new amount for the transaction.
+    """
+
     while True:
         try: 
             modified_amount = float(input('Enter the replacament amount: '))
@@ -91,6 +116,13 @@ def modifying_transaction_amount():
             print('You have entered an invalid input type. Please enter an int or float number.')
     
 def modifying_transaction_date():
+    """
+    Get a new date for the modified transaction.
+
+    Returns:
+        str: The new date formatted as 'YYYY-MM-DD'.
+    """
+
     modified_date = ''
     modified_month = ''
 
@@ -104,7 +136,16 @@ def modifying_transaction_date():
     return modified_date
 
 def loop_for_date(time_type: str, month=0) -> str:
-    """"""
+    """
+    Gets a part for the formatted date based on the specified time type(year, month, or day).
+
+    Args:
+        time_type (str): Specifies whether to get a year, month, or day.
+        month (int, optional): The month to determine the valid range for days. Defaults to 0.
+
+    Returns:
+        str: The validated input.
+    """
     #variables for bounds of user input
     bottom_limit = 0
     top_limit = 0
