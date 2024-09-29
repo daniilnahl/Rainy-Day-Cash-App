@@ -4,8 +4,11 @@ This module provides functionality for displaying, modifiying and deleting trans
 
 Functions:
     show_transactions(type_of_command: str, transactions: list) -> None.  Displays the current list of transactions based on a specified command.
-    delete_transaction(transactions: list) -> None  Prompts the user to delete a transaction.
-    modify_transaction(transactions: list) -> None Prompts the user to modify a transaction. 
+    mod_or_del_transaction(command_type: str, transactions: list) -> None. Modifies or deletes a transaction.
+    modifying_transaction_choice(transactions: list, transaction_index: int) -> None. Modifies time or amount based on user input.
+    modifying_transaction_amount() -> Returns new amount for transaction user modified. Gets user input for amount they want to assign to modded transaction.
+    modifying_transaction_date() -> Returns new date for transaction user modified. Creates a formatted date for transaction user modified.
+    loop_for_date(time_type: str, month=0) -> Returns a type of time for user's new date. Gets info from user to create a formatted date.
 """
 
 def show_transactions(type_of_command: str,transactions: list):
@@ -30,85 +33,63 @@ def show_transactions(type_of_command: str,transactions: list):
     elif type_of_command == 'modify':
          print(f'CHOOSE A TRANSACTION TO MODIFY\n{transactions_showcase}')
 
+def mod_or_del_transaction(command_type: str, transactions: list):
+    if command_type == 'modify':
+        show_transactions('modify', transactions)
+    elif command_type == 'delete':
+        show_transactions('delete', transactions)
 
-def delete_transaction(transactions):
-    """
-    Prompt the user to delete a transaction from the list.
-
-    Args:
-        transactions (list): A list of transactions to choose from for deletion.
-
-    Returns:
-        None: function deletes the specified transaction and stops once a valid deletion is made.
-    """
-
-    show_transactions('delete',transactions)
-    print('Enter the number before the transaction that you would like to delete.')
-    while True:
-            try: 
-                #Prompts user to enter a valid label 
-                delete_transaction = int(input('Enter numbered label: ')) 
-                #calculates transaction index
-                transaction_index = delete_transaction - 1 
-
-                #checks if the transaction_index  is within bounds 
-                if transaction_index not in range(len(transactions)): 
-                    print("The transaction you want to delete is out of bounds and doesn't exist.")
-                
-                else:
-                    print(f"Succesfully deleted transaction {delete_transaction}. {transactions[transaction_index]}\n")
-                    del transactions[transaction_index]#deletes the transaction element
-                    break
-            
-            except ValueError:# Handle invalid input that isn't an integer
-                 print('Invalid input. Please enter an integer number corresponding to a transaction.')
-
-def modify_transaction(transactions):
-    show_transactions('modify', transactions)
-    print('Enter the number before the transaction that you would like to modify.')
+    print(f'Enter the number before the transaction that you would like to {command_type}.')
     while True:
         try: 
             #Prompts user to enter a valid label 
             modify_transaction = int(input('Enter here: ')) 
-            #calculates transaction index
+            #calculates transaction's index
             transaction_index = modify_transaction - 1 
-
             #checks if the transaction_index  is within bounds 
             if transaction_index not in range(len(transactions)): 
-                print("The transaction you want to modify is out of bounds and doesn't exist.")
+                print(f"The transaction you want to {command_type} is out of bounds and doesn't exist.")
                 
             else:
-                print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
-                while True:
-                    try:
-                        modified_part = int(input('Enter 0 for amount, and 1 for date: '))
-                        #modifies the amount
-                        if modified_part == 0:
-                            while True:
-                                    try: 
-                                        modified_amount = float(input('Enter the replacament amount: '))
-                                        print(f'Successfully assigned new value. Now the amount is {modified_amount}.')
-                                        transactions[transaction_index][0] = modified_amount#assigns the new amount 
-                                        break
-                                    except ValueError:#handles input which cant be converted to a float
-                                        print('You have entered an invalid amount. Please enter a number.')
-                            break#stops the loop for choosing the modifying part
-                        #modifies the date
-                        elif modified_part == 1: 
-                            #stores the new date
-                            new_date = modifying_transaction_date()
-                            transactions[transaction_index][1] = new_date#assigns the new date 
-                            break
-                        else:#if user doesnt enter a num for amount or date
-                            print('No modifiable data at this number.')
-                            continue
-                    except ValueError:
-                        print('Invalid input. You can only enter an integer number. ERROR MOD TRNS')
+                if command_type == 'modify':   
+                    modifying_transaction_choice(transactions, transaction_index)
+                elif command_type == 'delete':
+                    print(f"Succesfully deleted {transactions[transaction_index]}\n")
+                    del transactions[transaction_index]#deletes the transaction element  
                 break                   
         except ValueError:# Handle invalid input that isn't an integer
             print('Invalid input. Please enter an integer number corresponding to a transaction.')
-        
+
+def modifying_transaction_choice(transactions: list, transaction_index: int):
+    print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
+    while True:
+        try:
+            modified_part = int(input('Enter 0 for amount, and 1 for date: '))
+            #modifies the amount
+            if modified_part == 0:
+                transactions[transaction_index][0] = modifying_transaction_amount() 
+            #modifies the date
+            elif modified_part == 1: 
+                #stores the new date
+                transactions[transaction_index][1] = modifying_transaction_date() 
+                break
+            else:#if user doesnt enter a num for amount or date
+                print('No modifiable data at this number.')
+                continue
+        except ValueError:
+                print('Invalid input. You can only enter an integer number. ERROR MOD TRNS')
+        break   
+    
+def modifying_transaction_amount():
+    while True:
+        try: 
+            modified_amount = float(input('Enter the replacament amount: '))
+            print(f'Successfully assigned new value. Now the amount is {modified_amount}.')
+            return modified_amount#assigns the new amount 
             
+        except ValueError:#handles input which cant be converted to a float
+            print('You have entered an invalid amount. Please enter a number.')
+    
 def modifying_transaction_date():
     modified_date = ''
     modified_month = ''
