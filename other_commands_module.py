@@ -84,7 +84,7 @@ def modifying_transaction_amount():
     while True:
         try: 
             modified_amount = float(input('Enter the replacament amount: '))
-            print(f'Successfully assigned new value. Now the amount is {modified_amount}.')
+            print(f'Successfully assigned new value. Now the amount is {modified_amount}.\n')
             return modified_amount#assigns the new amount 
             
         except ValueError:#handles input which cant be converted to a float
@@ -100,7 +100,7 @@ def modifying_transaction_date():
     modified_date += modified_month + '-'
     modified_date += loop_for_date('day', int(modified_month))
     
-    print(f'Successfully assigned new date. Now the date is {modified_date}.')
+    print(f'Successfully assigned new date. Now the date is {modified_date}.\n')
     return modified_date
 
 def loop_for_date(time_type: str, month=0) -> str:
