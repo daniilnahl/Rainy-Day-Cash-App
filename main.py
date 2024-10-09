@@ -1,6 +1,7 @@
 import records_module as rm
 import main_module as mm
 import other_commands_module as ocm    
+import files_module as fm
 def main():
     #welcome message with initial view of the commands
     mm.welcome_message()
@@ -37,6 +38,10 @@ def main():
         elif command == 'transactions':
             ocm.show_transactions('transactions', transactions)
 
+        #opens files menu
+        elif command == 'files menu':
+            fm.file_menu()
+            
         elif command == 'quit':
             break   
 
@@ -50,7 +55,7 @@ def main():
         #FOR FUTURE
         #(DONE)1. Modularize code. 
         #(DONE)1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type 
-        #2. add feature to delete a transaction and to modify an exisitng transaction
+        #(DONE)2. add feature to delete a transaction and to modify an exisitng transaction
         #2.5 Adds features to show transactions in orderL ascedning amount, descending amount, by date. Sorting algorithms.
         #3. Add a feature that will record the transactions in a CSV file. 
 if __name__ == "__main__":

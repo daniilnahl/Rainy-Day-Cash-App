@@ -31,6 +31,7 @@ delete - remove a transaction from the tracker.
 modify - modify a transaction.
 transactions - view all transactions.      
 total - view the total amount.
+files - open files menu.
 help - view the command list.
 quit - quits the program.
 """)
