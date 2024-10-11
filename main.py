@@ -8,7 +8,7 @@ def main():
     mm.command_list()
     
     #variables
-    transactions = [[-12.1, '2024-09-27']]  
+    transactions = []  
 
     while True:
         #updates the total amount of money with each cycle 
@@ -39,8 +39,9 @@ def main():
             ocm.show_transactions('transactions', transactions)
 
         #opens files menu
-        elif command == 'files menu':
-            fm.file_menu()
+        elif command == 'files':
+            fm.file_menu(transactions)
+            mm.command_list()
             
         elif command == 'quit':
             break   
