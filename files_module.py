@@ -17,6 +17,7 @@ quit - go back to main menu.
         user_input = input("Enter the file command you would like to do: ").lower()
         if user_input == 'create':
             current_file = create_file()  
+            print(current_file)
         elif user_input == 'record':
             record_to_file(transactions, current_file)     
         elif user_input == 'quit':
@@ -24,11 +25,13 @@ quit - go back to main menu.
         else:
             print('You have entered an invalid command. Please try again.')
             
-def files_list_update(): #WORK IN PROGRESS
-    with open('list_of_file.txt', 'w+', encoding='utf-8') as list_of_files:
-        files_list.append(list_of_files.readline('\n'))
-    list_of_files.close()
-        
+def files_list_update(): #updates the list of files 
+    """Updates global files_list using data stored in list_of_file.csv when the app starts up"""
+    with open('list_of_file.csv', 'r', encoding='utf-8') as list_of_files:
+        reader = csv.reader(list_of_files)
+        for file_name in reader:
+            files_list.extend(file_name)
+            
         
         
     
@@ -36,7 +39,7 @@ def files_list_update(): #WORK IN PROGRESS
 #add a check for if a file already exists with such a name
 #add a command to show all files
 def create_file():
-    file_name = input('How would you like to name your file? Enter here: ') + '.txt'#for file type
+    file_name = input('How would you like to name your file? Enter here: ') + '.csv'#for file type
     
     while True:
         if file_name in files_list:#checks if the file already exists
@@ -47,7 +50,10 @@ def create_file():
         global current_file#without this code it doesnt work
         current_file = open(file_name, 'w+', encoding='utf-8')
         print(f"Succesfully create a file by the name of {file_name}\n")
-    
+
+        #CREATE FILE AND PROMPT TO RECORD INTO IT
+        #THE GLOBAL FILE ACCESS IS WHAT CAUSING THE ERROR. IT CAN"T DO THAT.
+        #SO, USE FUNCTIONS BELOW IN THIS METHOD.
         #stores the file name
         files_list.append(file_name)
         break
@@ -76,9 +82,11 @@ def record_to_file(transactions: list, file: object):
         else:
             print('Invalid command. Enter a number as specified above.')    
     
-    file.write(transactions_text)
+    with open(file, 'w', newline='\n', encoding='utf-8') as current_file: #reworked this for csv
+        writer = csv.writer(current_file)#created an object to write
+        writer.writerow(transactions_text)#wrote data into file 
+    #auto closes   
     print('Succsefuly recorded transactions.\n')
-    file.close()
     
 def transactions_text_list(transactions) -> str:
     """Helper function to get a sorted list of transactions as a string"""
