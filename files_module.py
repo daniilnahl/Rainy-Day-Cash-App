@@ -2,7 +2,7 @@
 """Module for handling functions for recording and reading data from and to CSV files."""
 import csv
 
-global current_file #file that is being interacted with
+
 files_list = [] #list for all file names [WOULD NEED TO BE UPDATED EACH TIME WHEN THE APP RESTARTS UNLESS THERE IS ANOTHER WAY TO CHECK]
 
 def file_menu(transactions: list):
@@ -16,46 +16,53 @@ quit - go back to main menu.
     while True: #loop to get user input 
         user_input = input("Enter the file command you would like to do: ").lower()
         if user_input == 'create':
-            current_file = create_file()  
+            current_file = create_file(transactions)  
             print(current_file)
-        elif user_input == 'record':
+        elif user_input == 'open':
             record_to_file(transactions, current_file)     
         elif user_input == 'quit':
             break
         else:
             print('You have entered an invalid command. Please try again.')
+
             
-def files_list_update(): #updates the list of files 
+def files_list_update(files_list: list): #updates the list of files 
     """Updates global files_list using data stored in list_of_file.csv when the app starts up"""
     with open('list_of_file.csv', 'r', encoding='utf-8') as list_of_files:
         reader = csv.reader(list_of_files)
         for file_name in reader:
             files_list.extend(file_name)
             
-        
-        
-    
-    
+def files_list_write(files_list: list):
+    """Writes updated files list into the csv file"""
+    with open('list_of_file.csv', 'w', newline= "", encoding='utf-8') as list_of_files:
+        writer = csv.writer(list_of_files)
+        writer.writerow(files_list)
+          
 #add a check for if a file already exists with such a name
 #add a command to show all files
-def create_file():
+def create_file(transactions: list):
+    #updates the list of files that already exist
+    files_list = []
+    files_list_update(files_list)
+    
     file_name = input('How would you like to name your file? Enter here: ') + '.csv'#for file type
     
     while True:
         if file_name in files_list:#checks if the file already exists
-            print('File already exists. Access it through command prompt.')
+            print("File already exists. Access it through command 'open'.")
             break
         
-        #intializes the file
-        global current_file#without this code it doesnt work
         current_file = open(file_name, 'w+', encoding='utf-8')
         print(f"Succesfully create a file by the name of {file_name}\n")
-
-        #CREATE FILE AND PROMPT TO RECORD INTO IT
-        #THE GLOBAL FILE ACCESS IS WHAT CAUSING THE ERROR. IT CAN"T DO THAT.
-        #SO, USE FUNCTIONS BELOW IN THIS METHOD.
-        #stores the file name
+        
+        #updates the files list
         files_list.append(file_name)
+        
+        #updates the files list
+        files_list_write(files_list)
+        
+        record_to_file(transactions, current_file)
         break
     
 def record_to_file(transactions: list, file: object):     
@@ -82,12 +89,20 @@ def record_to_file(transactions: list, file: object):
         else:
             print('Invalid command. Enter a number as specified above.')    
     
-    with open(file, 'w', newline='\n', encoding='utf-8') as current_file: #reworked this for csv
+    with open(file, 'w', newline="", encoding='utf-8') as current_file: #reworked this for csv
         writer = csv.writer(current_file)#created an object to write
         writer.writerow(transactions_text)#wrote data into file 
     #auto closes   
     print('Succsefuly recorded transactions.\n')
+
+
+#make a helper function for opening a file and writing data into a file
+#def write_to_file(file: object, files_list: list, trans_text: str):
     
+    
+    
+    
+
 def transactions_text_list(transactions) -> str:
     """Helper function to get a sorted list of transactions as a string"""
     return f'\n'.join(f'{index + 1}. {transaction}' for index, transaction in enumerate(transactions))
