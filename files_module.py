@@ -1,6 +1,9 @@
 
 """Module for handling functions for recording and reading data from and to CSV files."""
 import csv
+#add function to delete files
+#add function to modify files
+#add function to write in already exisitng files
 
 def file_menu(transactions: list):
     print("""FILE MENU
@@ -27,18 +30,23 @@ quit - go back to main menu.
             
 def files_list_update(files_list: list): #updates the list of files 
     """Updates global files_list using data stored in list_of_file.csv when the app starts up"""
-    with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
-        reader = csv.reader(list_of_files)
-        for file_name in reader:
-            files_list.extend(file_name)
+    try:
+        with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
+            reader = csv.reader(list_of_files)
+            for file_name in reader:
+                files_list.extend(file_name)
+    except FileNotFoundError:
+        print('File for files'' name storage is not found.')
             
 def files_list_write(files_list: list):
     """Writes updated files list into the csv file"""
-    with open('list_of_files.csv', 'w', newline= "", encoding='utf-8') as list_of_files:
-        writer = csv.writer(list_of_files)
-        writer.writerow(files_list)
+    try:
+        with open('list_of_files.csv', 'w', newline= "", encoding='utf-8') as list_of_files:
+            writer = csv.writer(list_of_files)
+            writer.writerow(files_list)
+    except FileNotFoundError:
+        print('File for files'' name storage is not found.')        
           
-#add a command to show all files!!!
 def create_file(transactions: list):
     #updates the list of files that already exist
     files_list = []
@@ -52,9 +60,8 @@ def create_file(transactions: list):
             break
         
         try:#creates the file
-            current_file = open(file_name, 'w+', encoding='utf-8')
-            print(f"Succesfully create a file by the name of {file_name}\n")
-            current_file.close()
+            with open(file_name, 'w+', encoding='utf-8') as current_file:
+                print(f"Succesfully create a file by the name of {file_name}\n")
         except IOError:#catches an error in creating a file
             print('An error occurred: {IOError}')
         
@@ -83,12 +90,12 @@ def record_to_file_prompt(transactions: list, file_name: str):
                 temp_transactions = transactions
                 break
             elif user_input == 2:
-                ('Recording in ascending order...')
-                temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=True)
+                print('Recording in ascending order...')
+                temp_transactions = sorted(transactions, key=lambda t: t[0], reverse=False)
                 break
             elif user_input == 3:
                 ('Recording in descending order...')
-                temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=False)
+                temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=True)
                 break
             else:
                 print('Invalid command. Enter a number as specified above.') 
@@ -97,7 +104,7 @@ def record_to_file_prompt(transactions: list, file_name: str):
     
     #records into file based on order user chose
     record_to_file_action(temp_transactions, file_name)
-    print('Succsefuly recorded transactions in specified order.\n')
+   
    
 def record_to_file_action(transactions, file_name):
     with open(file_name, 'w', newline = "", encoding='utf-8') as current_file: #reworked this for csv
@@ -105,5 +112,6 @@ def record_to_file_action(transactions, file_name):
         for transaction in transactions:
             writer.writerow(transaction)#wrote data into file 
         #auto closes
+    print('Transactions succesfully stored.\n')
 
     
