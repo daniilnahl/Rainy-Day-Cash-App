@@ -2,7 +2,7 @@
 """Module for handling functions for recording and reading data from and to CSV files."""
 import csv
 
-
+#
 files_list = [] #list for all file names [WOULD NEED TO BE UPDATED EACH TIME WHEN THE APP RESTARTS UNLESS THERE IS ANOTHER WAY TO CHECK]
 
 def file_menu(transactions: list):
