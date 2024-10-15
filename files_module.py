@@ -5,6 +5,7 @@ import csv
 def file_menu(transactions: list):
     print("""FILE MENU
 create - creates a file and get prompted to record transactions.   
+show - show all stored files.
 quit - go back to main menu.  
 """)
     
@@ -13,6 +14,12 @@ quit - go back to main menu.
         if user_input == 'create':
             current_file = create_file(transactions)  
             print(current_file)  
+        elif user_input == 'show':
+            #shows all available files
+            temp_files_list = []
+            files_list_update(temp_files_list)
+            print('Available files:')
+            print('\n'.join(temp_files_list))
         elif user_input == 'quit':
             break
         else:
@@ -44,10 +51,12 @@ def create_file(transactions: list):
             print("File with such a name already exists.")
             break
         
-        #creates the file
-        current_file = open(file_name, 'w+', encoding='utf-8')
-        print(f"Succesfully create a file by the name of {file_name}\n")
-        current_file.close()
+        try:#creates the file
+            current_file = open(file_name, 'w+', encoding='utf-8')
+            print(f"Succesfully create a file by the name of {file_name}\n")
+            current_file.close()
+        except IOError:#catches an error in creating a file
+            print('An error occurred: {IOError}')
         
         #updates the files list
         files_list.append(file_name)
@@ -67,29 +76,34 @@ def record_to_file_prompt(transactions: list, file_name: str):
     temp_transactions = []
     #loop for user input
     while True:
-        user_input = int(input('Enter here: '))
-        if user_input == 1:
-            temp_transactions = transactions
-            break
-        elif user_input == 2:
-            temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=True)
-            break
-        elif user_input == 3:
-            temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=False)
-            break
-        else:
-            print('Invalid command. Enter a number as specified above.')   
+        try:
+            user_input = int(input('Enter here: '))
+            if user_input == 1:
+                print('Recording in original order...')
+                temp_transactions = transactions
+                break
+            elif user_input == 2:
+                ('Recording in ascending order...')
+                temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=True)
+                break
+            elif user_input == 3:
+                ('Recording in descending order...')
+                temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=False)
+                break
+            else:
+                print('Invalid command. Enter a number as specified above.') 
+        except ValueError:
+            print('Invalid input type. Please enter an integer number.')    
+    
     #records into file based on order user chose
     record_to_file_action(temp_transactions, file_name)
     print('Succsefuly recorded transactions in specified order.\n')
-    
+   
 def record_to_file_action(transactions, file_name):
-    with open(file_name, 'w', encoding='utf-8') as current_file: #reworked this for csv
+    with open(file_name, 'w', newline = "", encoding='utf-8') as current_file: #reworked this for csv
         writer = csv.writer(current_file)#created an object to write
         for transaction in transactions:
             writer.writerow(transaction)#wrote data into file 
         #auto closes
-        
-#make a helper function for opening a file and writing data into a file
-#def write_to_file(file: object, files_list: list, trans_text: str):
+
     
