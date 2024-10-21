@@ -40,10 +40,19 @@ quit - go back to main menu.
             print('You have entered an invalid command. Please try again.')
 
 def import_from_file(transactions):
+    #intializes files list to check if such a file exists
+    files_list = []
+    files_list_update(files_list)
+    
     #loop for choosing a file to import from
-    file_choose_loop = True
-    while file_choose_loop:
+    while True:
         file_name = input("Enter the file's name to import transactions from: ")
+        if file_name in files_list:#checks for the file to exist
+            print(f'Importing files from {file_name}...')
+            
+            break
+        else:
+            print(f'No file found with name of {file_name}')  
                    
 def delete_file():
     #intializes files list to check if such a file exists
@@ -71,7 +80,7 @@ def files_list_update(files_list: list): #updates the list of files
         with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
             reader = csv.reader(list_of_files)
             for file_name in reader:
-                files_list.extend(file_name)
+                files_list.extend(file_name)#writes file names into the list
     except FileNotFoundError:
         print('File for files'' name storage is not found.')
             
@@ -148,5 +157,11 @@ def record_to_file_action(transactions, file_name):
         writer = csv.writer(current_file)#created an object to write
         for transaction in transactions:
             writer.writerow(transaction)#wrote data into file 
-        #auto closes
     print('Transactions succesfully stored.\n')
+    
+def record_from_file_action(transactions: list, file_name: str):
+    with open(file_name, 'r', newline = "", encoding='utf-8') as current_file: 
+        reader = csv.writer(current_file)#created an object to write
+        for transaction in reader:
+            transactions.extend(transaction)
+    print('Transactions succesfully imported.\n')
