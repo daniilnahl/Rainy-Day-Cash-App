@@ -1,33 +1,70 @@
 
 """Module for handling functions for recording and reading data from and to CSV files."""
 import csv
-#add function to delete files
-#add function to modify files
-#add function to write in already exisitng files
+import os
 
 def file_menu(transactions: list):
     print("""FILE MENU
-create - creates a file and get prompted to record transactions.   
+create - creates a file and get prompted to record transactions.  
+import - import transactions from a file (File to be imported must have been created using this application). 
+delete - delete a file.
 show - show all stored files.
 quit - go back to main menu.  
 """)
-    
-    while True: #loop to get user input 
+    main_menu_loop = True
+    while main_menu_loop: #loop to get user input 
         user_input = input("Enter the file command you would like to do: ").lower()
         if user_input == 'create':
             current_file = create_file(transactions)  
             print(current_file)  
+            
         elif user_input == 'show':
             #shows all available files
             temp_files_list = []
             files_list_update(temp_files_list)
             print('Available files:')
             print('\n'.join(temp_files_list))
+            print()
+        
+        elif user_input == 'import':
+            import_from_file()
+               
+        elif user_input == 'delete':
+            delete_file()
+            
         elif user_input == 'quit':
+            print()
             break
+        
         else:
             print('You have entered an invalid command. Please try again.')
-            
+
+def import_from_file(transactions):
+    #loop for choosing a file to import from
+    file_choose_loop = True
+    while file_choose_loop:
+        file_name = input("Enter the file's name to import transactions from: ")
+                   
+def delete_file():
+    #intializes files list to check if such a file exists
+    files_list = []
+    files_list_update(files_list)
+    
+    #loop to delete file using user input
+    while True: 
+        file_name = input("Enter the file's name you want to delete: ")
+        if file_name in files_list:#checks for the file to exist
+            print(f'Succesfully deleted {file_name}\n')
+            os.remove(file_name)
+            files_list.remove(file_name)#removes the file from the list variable
+            break
+        else:
+            print(f'No file found with name of {file_name}')   
+    #updates the files list file after deleting a file
+    files_list_write(files_list)
+        
+          
+                        
 def files_list_update(files_list: list): #updates the list of files 
     """Updates global files_list using data stored in list_of_file.csv when the app starts up"""
     try:
@@ -81,8 +118,9 @@ def record_to_file_prompt(transactions: list, file_name: str):
     
     #temp transactions for rtfa function
     temp_transactions = []
+    user_input_loop = True
     #loop for user input
-    while True:
+    while user_input_loop:
         try:
             user_input = int(input('Enter here: '))
             if user_input == 1:
@@ -105,7 +143,6 @@ def record_to_file_prompt(transactions: list, file_name: str):
     #records into file based on order user chose
     record_to_file_action(temp_transactions, file_name)
    
-   
 def record_to_file_action(transactions, file_name):
     with open(file_name, 'w', newline = "", encoding='utf-8') as current_file: #reworked this for csv
         writer = csv.writer(current_file)#created an object to write
@@ -113,5 +150,3 @@ def record_to_file_action(transactions, file_name):
             writer.writerow(transaction)#wrote data into file 
         #auto closes
     print('Transactions succesfully stored.\n')
-
-    
