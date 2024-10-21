@@ -163,6 +163,14 @@ def record_from_file_action(transactions: list, file_name: str):
     with open(file_name, 'r', newline = "", encoding='utf-8') as current_file: 
         reader = csv.reader(current_file)#created an object to write
         for transaction in reader:
-            transactions.extend(transaction)#FIGURE OUT HOW TO CONVERT TRANSACTION[0] TO FLOAT
+            try:
+                #break the transaction in two parts
+               amount = float(transaction[0])
+               date = transaction[1] 
+               transactions.append([amount, date])#assembles the transactions from the parts into one and stores it
+            except (ValueError, IndexError):
+                #skips if not enough elements to create a transaction
+                continue
+            
     print(transactions)#TEST
-    print('Transactions succesfully imported.\n')
+    print('Transactions successfully imported.\n')
