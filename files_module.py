@@ -27,7 +27,7 @@ quit - go back to main menu.
             print()
         
         elif user_input == 'import':
-            import_from_file()
+            import_from_file(transactions)
                
         elif user_input == 'delete':
             delete_file()
@@ -49,7 +49,7 @@ def import_from_file(transactions):
         file_name = input("Enter the file's name to import transactions from: ")
         if file_name in files_list:#checks for the file to exist
             print(f'Importing files from {file_name}...')
-            
+            record_from_file_action(transactions, file_name)
             break
         else:
             print(f'No file found with name of {file_name}')  
@@ -75,7 +75,7 @@ def delete_file():
           
                         
 def files_list_update(files_list: list): #updates the list of files 
-    """Updates global files_list using data stored in list_of_file.csv when the app starts up"""
+    """Updates files_list using data stored in list_of_file.csv when the app starts up"""
     try:
         with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
             reader = csv.reader(list_of_files)
@@ -161,7 +161,8 @@ def record_to_file_action(transactions, file_name):
     
 def record_from_file_action(transactions: list, file_name: str):
     with open(file_name, 'r', newline = "", encoding='utf-8') as current_file: 
-        reader = csv.writer(current_file)#created an object to write
+        reader = csv.reader(current_file)#created an object to write
         for transaction in reader:
-            transactions.extend(transaction)
+            transactions.extend(transaction)#FIGURE OUT HOW TO CONVERT TRANSACTION[0] TO FLOAT
+    print(transactions)#TEST
     print('Transactions succesfully imported.\n')
