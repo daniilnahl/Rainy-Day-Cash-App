@@ -5,7 +5,7 @@ import os
 
 def file_menu(transactions: list):
     print("""FILE MENU
-create - creates a file and get prompted to record transactions.  
+create - create - creates a file and be prompted to record transactions.
 import - import transactions from a file (File to be imported must have been created using this application). 
 delete - delete a file.
 show - show all stored files.
@@ -15,22 +15,20 @@ quit - go back to main menu.
     while main_menu_loop: #loop to get user input 
         user_input = input("Enter the file command you would like to do: ").lower()
         if user_input == 'create':
-            current_file = create_file(transactions)  
-            print(current_file)  
+            create_file(transactions)  
             
         elif user_input == 'show':
             #shows all available files
-            temp_files_list = []
-            files_list_update(temp_files_list)
+            files_list = []
+            files_list_update(files_list)
             print('Available files:')
-            print('\n'.join(temp_files_list))
-            print()
-        
+            print(f'\n'.join(f'{index + 1}. {file_name}' for index, file_name in enumerate(files_list)))
+
         elif user_input == 'import':
-            import_from_file(transactions)
+            import_or_delete_file(transactions, 'import')
                
         elif user_input == 'delete':
-            delete_file()
+            import_or_delete_file(transactions, 'delete')
             
         elif user_input == 'quit':
             print()
@@ -39,41 +37,45 @@ quit - go back to main menu.
         else:
             print('You have entered an invalid command. Please try again.')
 
-def import_from_file(transactions):
+def import_or_delete_file(transactions: list, command: str):
     #intializes files list to check if such a file exists
     files_list = []
     files_list_update(files_list)
     
-    #loop for choosing a file to import from
-    while True:
-        file_name = input("Enter the file's name to import transactions from: ")
-        if file_name in files_list:#checks for the file to exist
-            print(f'Importing files from {file_name}...')
-            record_from_file_action(transactions, file_name)
-            break
-        else:
-            print(f'No file found with name of {file_name}')  
-                   
-def delete_file():
-    #intializes files list to check if such a file exists
-    files_list = []
-    files_list_update(files_list)
-    
-    #loop to delete file using user input
-    while True: 
-        file_name = input("Enter the file's name you want to delete: ")
-        if file_name in files_list:#checks for the file to exist
-            print(f'Succesfully deleted {file_name}\n')
-            os.remove(file_name)
-            files_list.remove(file_name)#removes the file from the list variable
-            break
-        else:
-            print(f'No file found with name of {file_name}')   
-    #updates the files list file after deleting a file
-    files_list_write(files_list)
-        
-          
-                        
+    #Checks if the files_list contains any file names
+    if not files_list:
+        print(f'No files found in the system to {command}.\n')
+    else:
+        print('Available files:')
+        #prints all files stored in files_list
+        print(f'\n'.join(f'{index + 1}. {file_name}' for index, file_name in enumerate(files_list)))
+        #loop for choosing a file to import from or delete 
+        while True:
+            file_name = input("Enter the file's name to import transactions from: ")
+            if file_name in files_list:#checks for the file to exist
+                #for delete command
+                if command == 'delete':
+                    delete_file_action(file_name, files_list)
+                    break
+                #for import command
+                elif command == 'import':
+                    import_file_action(transactions, file_name)
+                    break
+            else:
+                print(f'No file found with name of {file_name}') 
+
+def delete_file_action(file_name, files_list: list):
+    #helper function to delete a file
+    print(f'Successfully deleted {file_name}.\n')
+    os.remove(file_name)
+    files_list.remove(file_name)#removes the file from the list variable
+    files_list_write(files_list)#update files_list file
+
+def import_file_action(transactions: list, file_name: str):
+    #helper function to import a file
+    print(f'Importing transactions from {file_name}...')
+    record_from_file_action(transactions, file_name)
+                                                        
 def files_list_update(files_list: list): #updates the list of files 
     """Updates files_list using data stored in list_of_file.csv when the app starts up"""
     try:
@@ -82,7 +84,7 @@ def files_list_update(files_list: list): #updates the list of files
             for file_name in reader:
                 files_list.extend(file_name)#writes file names into the list
     except FileNotFoundError:
-        print('File for files'' name storage is not found.')
+        print('File to store file names in is not found.')
             
 def files_list_write(files_list: list):
     """Writes updated files list into the csv file"""
@@ -125,7 +127,7 @@ def record_to_file_prompt(transactions: list, file_name: str):
 2 - ascending by amount.
 3 - descending by amount.""")
     
-    #temp transactions for rtfa function
+    #temporary list to store transactions for recording.
     temp_transactions = []
     user_input_loop = True
     #loop for user input
@@ -141,7 +143,7 @@ def record_to_file_prompt(transactions: list, file_name: str):
                 temp_transactions = sorted(transactions, key=lambda t: t[0], reverse=False)
                 break
             elif user_input == 3:
-                ('Recording in descending order...')
+                print('Recording in descending order...')
                 temp_transactions = sorted(transactions,  key=lambda t: t[0], reverse=True)
                 break
             else:
@@ -171,6 +173,4 @@ def record_from_file_action(transactions: list, file_name: str):
             except (ValueError, IndexError):
                 #skips if not enough elements to create a transaction
                 continue
-            
-    print(transactions)#TEST
     print('Transactions successfully imported.\n')
