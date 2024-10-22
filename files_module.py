@@ -1,9 +1,32 @@
+"""
+CSV Handling Module
+This module manages recording and reading data from CSV files.
 
-"""Module for handling functions for recording and reading data from and to CSV files."""
+Functions:
+    file_menu(transactions: list) -> None. Displays the file menu and processes user commands.
+    import_or_delete_file(transactions: list, command: str) -> None. Imports or deletes a specified file.
+    delete_file_action(file_name: str, files_list: list) -> None:. Deletes a specified file and updates the file list.
+    import_file_action(transactions: list, file_name: str) -> None. Imports transactions from a specified file.
+    files_list_update(files_list: list) -> Non. Updates the list of files from the CSV storage.
+    files_list_write(files_list: list) -> None. Writes the updated file list back to the CSV storage.
+    create_file(transactions: list) -> None. Prompts user to create a new CSV file for transactions.
+    record_to_file_prompt(transactions: list, file_name: str) -> None. Prompts user to select the order of transactions for recording.
+    record_to_file_action(transactions: list, file_name: str) -> None. Writes transactions to the specified CSV file.
+    record_from_file_action(transactions: list, file_name: str) -> None. Reads transactions from the specified CSV file and updates the list.
+"""
 import csv
 import os
 
 def file_menu(transactions: list):
+    """
+    Displays the file menu and processes user commands.
+
+    Args:
+        transactions (list): A list of transactions to manage.
+    
+    Returns:
+        None
+    """
     print("""FILE MENU
 create - create - creates a file and be prompted to record transactions.
 import - import transactions from a file (File to be imported must have been created using this application). 
@@ -38,6 +61,16 @@ quit - go back to main menu.
             print('You have entered an invalid command. Please try again.')
 
 def import_or_delete_file(transactions: list, command: str):
+    """
+    Imports or deletes a specified file based on user input.
+
+    Args:
+        transactions (list): A list of transactions.
+        command (str): The command indicating whether to 'import' or 'delete' a file.
+
+    Returns:
+        None
+    """
     #intializes files list to check if such a file exists
     files_list = []
     files_list_update(files_list)
@@ -65,6 +98,16 @@ def import_or_delete_file(transactions: list, command: str):
                 print(f'No file found with name of {file_name}') 
 
 def delete_file_action(file_name, files_list: list):
+    """
+    Deletes a specified file and updates the file list.
+
+    Args:
+        file_name (str): The name of the file to delete.
+        files_list (list): The current list of files to be updated.
+
+    Returns:
+        None
+    """
     #helper function to delete a file
     print(f'Successfully deleted {file_name}.\n')
     os.remove(file_name)
@@ -72,12 +115,30 @@ def delete_file_action(file_name, files_list: list):
     files_list_write(files_list)#update files_list file
 
 def import_file_action(transactions: list, file_name: str):
+    """
+    Imports transactions from a specified file into the transactions list.
+
+    Args:
+        transactions (list): The list of transactions to append imported data to.
+        file_name (str): The name of the file to import transactions from.
+
+    Returns:
+        None
+    """
     #helper function to import a file
     print(f'Importing transactions from {file_name}...')
     record_from_file_action(transactions, file_name)
                                                         
 def files_list_update(files_list: list): #updates the list of files 
-    """Updates files_list using data stored in list_of_file.csv when the app starts up"""
+    """
+    Updates the list of files from the CSV storage.
+
+    Args:
+        files_list (list): The list to be populated with file names.
+
+    Returns:
+        None
+    """
     try:
         with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
             reader = csv.reader(list_of_files)
@@ -87,7 +148,15 @@ def files_list_update(files_list: list): #updates the list of files
         print('File to store file names in is not found.')
             
 def files_list_write(files_list: list):
-    """Writes updated files list into the csv file"""
+    """
+    Writes the updated file list back to the CSV storage.
+
+    Args:
+        files_list (list): The list of file names to be written to the storage.
+
+    Returns:
+        None
+    """
     try:
         with open('list_of_files.csv', 'w', newline= "", encoding='utf-8') as list_of_files:
             writer = csv.writer(list_of_files)
@@ -96,6 +165,15 @@ def files_list_write(files_list: list):
         print('File for files'' name storage is not found.')        
           
 def create_file(transactions: list):
+    """
+    Prompts user to create a new CSV file for transactions.
+
+    Args:
+        transactions (list): The list of transactions to be recorded in the new file.
+
+    Returns:
+        None
+    """
     #updates the list of files that already exist
     files_list = []
     files_list_update(files_list)
@@ -121,7 +199,17 @@ def create_file(transactions: list):
         record_to_file_prompt(transactions, file_name)
         break
         
-def record_to_file_prompt(transactions: list, file_name: str):     
+def record_to_file_prompt(transactions: list, file_name: str):    
+    """
+    Prompts user to select the order for recording transactions into a file.
+
+    Args:
+        transactions (list): The list of transactions to be recorded.
+        file_name (str): The name of the file to store recorded transactions.
+
+    Returns:
+        None
+    """ 
     print("""In what order would you like to record transactions?
 1 - order in which transactions were made.
 2 - ascending by amount.
@@ -155,6 +243,16 @@ def record_to_file_prompt(transactions: list, file_name: str):
     record_to_file_action(temp_transactions, file_name)
    
 def record_to_file_action(transactions, file_name):
+    """
+    Writes transactions to the specified CSV file.
+
+    Args:
+        transactions (list): The list of transactions to write to the file.
+        file_name (str): The name of the file to store transactions.
+
+    Returns:
+        None
+    """
     with open(file_name, 'w', newline = "", encoding='utf-8') as current_file: #reworked this for csv
         writer = csv.writer(current_file)#created an object to write
         for transaction in transactions:
@@ -162,6 +260,16 @@ def record_to_file_action(transactions, file_name):
     print('Transactions succesfully stored.\n')
     
 def record_from_file_action(transactions: list, file_name: str):
+    """
+    Reads transactions from the specified CSV file and updates the transacations list.
+
+    Args:
+        transactions (list): The list of transactions to collect imported data.
+        file_name (str): The name of the file to read transactions from.
+
+    Returns:
+        None
+    """
     with open(file_name, 'r', newline = "", encoding='utf-8') as current_file: 
         reader = csv.reader(current_file)#created an object to write
         for transaction in reader:
