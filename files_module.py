@@ -23,10 +23,8 @@ def file_menu(transactions: list):
 
     Args:
         transactions (list): A list of transactions to manage.
-    
-    Returns:
-        None
     """
+    
     print("""FILE MENU
 create - create - creates a file and be prompted to record transactions.
 import - import transactions from a file (File to be imported must have been created using this application). 
@@ -67,9 +65,6 @@ def import_or_delete_file(transactions: list, command: str):
     Args:
         transactions (list): A list of transactions.
         command (str): The command indicating whether to 'import' or 'delete' a file.
-
-    Returns:
-        None
     """
     #intializes files list to check if such a file exists
     files_list = []
@@ -104,9 +99,6 @@ def delete_file_action(file_name, files_list: list):
     Args:
         file_name (str): The name of the file to delete.
         files_list (list): The current list of files to be updated.
-
-    Returns:
-        None
     """
     #helper function to delete a file
     print(f'Successfully deleted {file_name}.\n')
@@ -121,9 +113,6 @@ def import_file_action(transactions: list, file_name: str):
     Args:
         transactions (list): The list of transactions to append imported data to.
         file_name (str): The name of the file to import transactions from.
-
-    Returns:
-        None
     """
     #helper function to import a file
     print(f'Importing transactions from {file_name}...')
@@ -135,9 +124,6 @@ def files_list_update(files_list: list): #updates the list of files
 
     Args:
         files_list (list): The list to be populated with file names.
-
-    Returns:
-        None
     """
     try:
         with open('list_of_files.csv', 'r', encoding='utf-8') as list_of_files:
@@ -153,9 +139,6 @@ def files_list_write(files_list: list):
 
     Args:
         files_list (list): The list of file names to be written to the storage.
-
-    Returns:
-        None
     """
     try:
         with open('list_of_files.csv', 'w', newline= "", encoding='utf-8') as list_of_files:
@@ -170,9 +153,6 @@ def create_file(transactions: list):
 
     Args:
         transactions (list): The list of transactions to be recorded in the new file.
-
-    Returns:
-        None
     """
     #updates the list of files that already exist
     files_list = []
@@ -206,10 +186,8 @@ def record_to_file_prompt(transactions: list, file_name: str):
     Args:
         transactions (list): The list of transactions to be recorded.
         file_name (str): The name of the file to store recorded transactions.
-
-    Returns:
-        None
     """ 
+    
     print("""In what order would you like to record transactions?
 1 - order in which transactions were made.
 2 - ascending by amount.
@@ -249,10 +227,8 @@ def record_to_file_action(transactions, file_name):
     Args:
         transactions (list): The list of transactions to write to the file.
         file_name (str): The name of the file to store transactions.
-
-    Returns:
-        None
     """
+    
     with open(file_name, 'w', newline = "", encoding='utf-8') as current_file: #reworked this for csv
         writer = csv.writer(current_file)#created an object to write
         for transaction in transactions:
@@ -266,10 +242,8 @@ def record_from_file_action(transactions: list, file_name: str):
     Args:
         transactions (list): The list of transactions to collect imported data.
         file_name (str): The name of the file to read transactions from.
-
-    Returns:
-        None
     """
+    
     with open(file_name, 'r', newline = "", encoding='utf-8') as current_file: 
         reader = csv.reader(current_file)#created an object to write
         for transaction in reader:

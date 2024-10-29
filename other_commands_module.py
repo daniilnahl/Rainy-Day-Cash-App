@@ -18,9 +18,6 @@ def show_transactions(type_of_command: str,transactions: list):
     Args:
         type_of_command (str): Specifies how to display transactions.
         transactions (list): A list of transactions to be displayed.
-
-    Returns:
-        None
     """
     transactions_showcase = f'\n'.join(f'{index + 1}. {transaction}' for index, transaction in enumerate(transactions))
     
@@ -38,9 +35,6 @@ def mod_or_del_transaction(command_type: str, transactions: list):
     Args:
         command_type (str): Specifies whether to 'modify' or 'delete' a transaction.
         transactions (list): A list of transactions to modify or delete.
-
-    Returns:
-        None
     """
     if command_type == 'modify':
         show_transactions('modify', transactions)
@@ -75,9 +69,6 @@ def modifying_transaction_choice(transactions: list, transaction_index: int):
     Args:
         transactions (list): A list of transactions.
         transaction_index (int): The index of the transaction to modify.
-
-    Returns:
-        None
     """
     print(f'{transactions[transaction_index]} Would you like to modify the amount or date?')
     while True:

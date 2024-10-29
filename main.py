@@ -52,12 +52,5 @@ def main():
         else:
             print('You have entered an invalid command. Please try again.\n')
         
-
-        #FOR FUTURE
-        #(DONE)1. Modularize code. 
-        #(DONE)1.5 Modify code in such way that the input must be specific type and that it will loop until the input is of that type 
-        #(DONE)2. add feature to delete a transaction and to modify an exisitng transaction
-        #2.5 Adds features to show transactions in orderL ascedning amount, descending amount, by date. Sorting algorithms.
-        #3. Add a feature that will record the transactions in a CSV file. 
 if __name__ == "__main__":
     main()
