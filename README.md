@@ -9,6 +9,8 @@ Imagine going to your cash stash only to realize you can't remember how much you
 - Modify existing transactions.
 - Delete transactions.
 - Store transactions in a CSV file using different sorting orders.
+- Import transactions from CSV files.
+- Delete CSV files.
 
 ## Usage
 To use the **Rainy Day Cash App**, follow these steps:
